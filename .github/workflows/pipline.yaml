@@ -5,52 +5,49 @@ on:
     branches: [main]
 
 jobs:
- build:
-  name: Build Phase
-  runs-on: ubuntu-latest
+  build:
+    name: Build Phase
+    runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-  
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'npm'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: npm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-    - name: Build application
-      run: npm run build
+      - name: Install dependencies
+        run: npm install
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-files
-        path: dist/
-        retention-days: 1
+      - name: Build application
+        run: npm run build
 
- test:
-   name: Test Phase
-   runs-on: ubuntu-latest
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: dist/
+          retention-days: 1
 
-   steps:
-   - name: Checkout code
-     uses: actions/checkout@v4
+  test:
+    name: Test Phase
+    runs-on: ubuntu-latest
 
-   - name: Setup Node.js
-     uses: actions/setup-node@v4
-     with:
-       node-version: 20
-       cache: 'npm'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-   - name: Install dependencies
-     run: npm install
-      
-   - name: Run tests
-     run: npm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-   - name: Run tests
-     run: npm
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test -- --run
