@@ -71,7 +71,7 @@ jobs:
         - name: Douwnload build artifacts
           uses: actions/download-artifact@v4
           with:
-            name: biuld-files
+            name: build-files
             path: dist/
 
         - name: Install Firebase CLI
@@ -87,10 +87,10 @@ jobs:
         - name: Deploy firebase
           run: |
             export GOOGLE_APPLICATION_CREDENTIALS=$HOME/private-key.json
-            firebase experiments:enable weframeworks
+            firebase experiments:enable webframeworks
             firebase deploy --only hosting
 
         - name: Remove private key
           if: always()
-          run: re $HOME/private-key.json
+          run: rm $HOME/private-key.json
         
